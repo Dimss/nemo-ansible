@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ui
+  namespace: "{{namespace}}"
+  lables:
+    app: ui
+spec:
+  selector:
+    app: ui
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  namespace: "{{namespace}}"
+  labels:
+    app: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: ui
+        version: v1
+    spec:
+      containers:
+      - name: ui
+        image: "docker-registry.default.svc:5000/{{namespace}}/ui:0.1"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000

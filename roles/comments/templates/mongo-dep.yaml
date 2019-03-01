@@ -1,0 +1,64 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mongo-comments
+  namespace: "{{namespace}}"
+spec:
+  host: mongo-comments
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mongo-comments
+  namespace: "{{namespace}}"
+spec:
+  hosts:
+    - mongo-comments
+  tcp:
+  - match:
+    - port: 27017
+    route:
+    - destination:
+        host: mongo-comments
+        port:
+          number: 27017
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo-comments
+  namespace: "{{namespace}}"
+spec:
+  selector:
+    app: mongo-comments
+  ports:
+  - name: mongo
+    port: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-comments
+  namespace: "{{namespace}}"
+  labels:
+    app: mongo-comments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-comments
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: mongo-comments
+    spec:
+      containers:
+      - name: mongo-comments
+        image: "docker-registry.default.svc:5000/{{namespace}}/mongo:latest"
+        ports:
+        - containerPort: 27017

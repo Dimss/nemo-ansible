@@ -1,0 +1,2 @@
+state: present # present/absent
+receiver_bc_name: receiver

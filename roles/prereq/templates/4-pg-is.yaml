@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+    name: postgres
+    namespace: {{namespace}}
+spec:
+    tags:
+    - from:
+          kind: DockerImage
+          name: postgres
+      name: latest
+      importPolicy:
+          scheduled: true

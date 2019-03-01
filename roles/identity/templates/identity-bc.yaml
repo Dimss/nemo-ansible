@@ -1,0 +1,19 @@
+kind: "BuildConfig"
+apiVersion: "build.openshift.io/v1"
+metadata:
+  name: "{{identity_bc_name}}"
+  namespace: "{{namespace}}"
+spec:
+  runPolicy: "Serial"
+  source:
+    git:
+      uri: "https://github.com/Dimss/nemo-identity-service.git"
+  strategy:
+    sourceStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "openjdk18-openshift:latest"
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "identity:0.1"

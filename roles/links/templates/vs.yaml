@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: links
+  namespace: "{{namespace}}"
+spec:
+  hosts:
+    - links
+  http:
+  - route:
+    - destination:
+        host: links
+        subset: v1

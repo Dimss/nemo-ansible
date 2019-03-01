@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+    name: feed
+    namespace: "{{namespace}}"
+spec:
+    tags:
+    - from:
+          kind: DockerImage
+          name: docker-registry.default.svc:5000/nemo/feed
+      name: latest
+      importPolicy:
+          scheduled: true

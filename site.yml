@@ -1,0 +1,38 @@
+---
+- name: Prerequest
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Run prerequisite role
+      import_role:
+        name: prereq
+      tags: "prereq"
+    - name: Identity service deployment
+      import_role:
+        name: identity
+      tags: identity
+    - name: Receiver service deployment
+      import_role:
+        name: receiver
+      tags: receiver
+    - name: Links service deployment
+      import_role:
+        name: links
+      tags: links
+    - name: Comments service deployment
+      import_role:
+        name: comments
+      tags: comments
+    - name: Likes service deployment
+      import_role:
+        name: likes
+      tags: likes
+    - name: Feed service deployment
+      import_role:
+        name: feed
+      tags: feed
+    - name: UI service deployment
+      import_role:
+        name: ui
+      tags: ui
