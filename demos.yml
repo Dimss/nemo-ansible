@@ -18,3 +18,7 @@
       import_role:
         name: likes-abort
       tags: abort
+    - name: cb
+      import_role:
+        name: feed-cb
+      tags: cb

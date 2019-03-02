@@ -20,3 +20,12 @@ demo-abort:
 demo-abort-clean:
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags abort
 	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags likes
+
+demo-cb:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags cb
+	oc scale deployment feed --replicas=2
+
+demo-cb-clean:
+	oc scale deployment feed --replicas=1
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags cb
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags feed

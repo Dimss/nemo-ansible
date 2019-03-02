@@ -1,0 +1,4 @@
+- name:  Comments DestinationRule
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
