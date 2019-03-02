@@ -4,10 +4,10 @@ metadata:
   name: identity
   namespace: "{{namespace}}"
 spec:
-  host: identity
+  host: identity.nemo.svc.cluster.local
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: "{{mtls_mode}}"
   subsets:
   - name: v1
     labels:

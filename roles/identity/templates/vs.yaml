@@ -12,7 +12,7 @@ spec:
   http:
   - route:
     - destination:
-        host: identity
+        host: identity.nemo.svc.cluster.local
         subset: v1
     corsPolicy:
       allowOrigin:

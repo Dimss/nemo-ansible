@@ -7,7 +7,7 @@ spec:
   host: ui
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: "{{ui_mtls_mode}}"
   subsets:
   - name: v1
     labels:

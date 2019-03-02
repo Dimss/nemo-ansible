@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: likes
-  namespace: "{{namespace}}"
+  name: identity
+  namespace: istio-system
 spec:
-  host: likes
+  host: "identity.{{namespace}}.svc.cluster.local"
   trafficPolicy:
     tls:
-      mode: "{{mtls_mode}}"
+      mode: "{{identity_mtls_mode}}"
   subsets:
   - name: v1
     labels:

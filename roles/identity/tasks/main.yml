@@ -1,27 +1,3 @@
-- name:  Identity ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/identity-is.yaml') }}"
-
-- name:  Identity BuildConfig
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/identity-bc.yaml') }}"
-
-- name: Fetch build build state
-  k8s_facts:
-    kind: BuildConfig
-    api_version: build.openshift.io/v1
-    namespace: "{{namespace}}"
-    name: "{{identity_bc_name}}"
-  register: build_config
-
-- name: Build Identity docker image if it's a fresh setup
-  shell: "oc start-build {{identity_bc_name}} -n {{namespace}}"
-  when:
-    - build_config.resources | length > 0
-    - build_config.resources[0].status.lastVersion | int == 0
-
 # Add Postgres objects
 - name:  Identity Postgres
   k8s:
@@ -44,3 +20,13 @@
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+
+- name:  Identity DestinationRule for Istio NS
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+
+- name:  Identity Policy
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/policy.yaml') }}"

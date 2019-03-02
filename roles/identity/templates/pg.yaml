@@ -7,7 +7,7 @@ spec:
   host: pg
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: "{{mtls_mode}}"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService

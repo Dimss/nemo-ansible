@@ -1,0 +1,4 @@
+- name:  TKit
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/dep.yaml') }}"

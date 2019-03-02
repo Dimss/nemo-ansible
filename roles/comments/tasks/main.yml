@@ -1,29 +1,5 @@
-- name: Commnets ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/comments-is.yaml') }}"
-
-- name: Comments BuildConfig
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/comments-bc.yaml') }}"
-
-- name: Fetch build config state
-  k8s_facts:
-    kind: BuildConfig
-    api_version: build.openshift.io/v1
-    namespace: "{{namespace}}"
-    name: "{{comments_bc_name}}"
-  register: build_config
-
-- name: Build Comments docker image if it's a fresh setup
-  shell: "oc start-build {{comments_bc_name}} -n {{namespace}}"
-  when:
-    - build_config.resources | length > 0
-    - build_config.resources[0].status.lastVersion | int == 0
-
 # App objects
-- name:  MongDB instace
+- name:  MongoDB instace
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"

@@ -1,27 +1,3 @@
-- name:  UI ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/ui-is.yaml') }}"
-
-- name:  UI BuildConfig
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/ui-bc.yaml') }}"
-
-- name: Fetch build config state
-  k8s_facts:
-    kind: BuildConfig
-    api_version: build.openshift.io/v1
-    namespace: "{{namespace}}"
-    name: "{{ui_bc_name}}"
-  register: build_config
-
-- name: Build UI docker image if it's a fresh setup
-  shell: "oc start-build {{ui_bc_name}} -n {{namespace}}"
-  when:
-    - build_config.resources | length > 0
-    - build_config.resources[0].status.lastVersion | int == 0
-
 # App objects
 - name:  Comments Deployment
   k8s:
@@ -29,12 +5,22 @@
     definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
 # Istio objects
-- name:  Comments DestinationRule
+- name:  UI DestinationRule
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/drule.yaml') }}"
 
-- name:  Comments VirtualService
+- name:  UI VirtualService
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+
+- name:  UI DestinationRule for Istio NS
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+
+- name:  UI Policy for UI
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/policy.yaml') }}"

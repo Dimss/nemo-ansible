@@ -1,0 +1,11 @@
+kind: "Policy"
+apiVersion: "authentication.istio.io/v1alpha1"
+metadata:
+  name: "ui-permissive"
+  namespace: "{{namespace}}"
+spec:
+  targets:
+  - name: ui
+  peers:
+  - mtls:
+      mode: PERMISSIVE

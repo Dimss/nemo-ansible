@@ -1,0 +1,9 @@
+- name:  Application Routes
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/6-routes.yaml') }}"
+
+- name:  Istio Gateway
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/7-gw.yaml') }}"

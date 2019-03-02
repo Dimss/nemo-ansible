@@ -13,3 +13,7 @@ pyyaml = "*"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+create = 'ansible-playbook site.yml --extra-vars "namespace=nemo"'
+delete = "ansible-playbook site.yml --extra-vars 'namespace=nemo state=absent"

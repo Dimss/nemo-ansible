@@ -1,27 +1,3 @@
-- name:  Receiver ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/receiver-is.yaml') }}"
-
-- name:  Identity BuildConfig
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/receiver-bc.yaml') }}"
-
-- name: Fetch build build state
-  k8s_facts:
-    kind: BuildConfig
-    api_version: build.openshift.io/v1
-    namespace: "{{namespace}}"
-    name: "{{receiver_bc_name}}"
-  register: build_config
-
-- name: Build Receiver docker image if it's a fresh setup
-  shell: "oc start-build {{receiver_bc_name}} -n {{namespace}}"
-  when:
-    - build_config.resources | length > 0
-    - build_config.resources[0].status.lastVersion | int == 0
-
 # App objects
 - name:  Receiver Deployment
   k8s:
@@ -38,3 +14,13 @@
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+
+- name: Receiver DestinationRule for Istio NS
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+
+- name: Receiver Policy
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/policy.yaml') }}"
