@@ -1,26 +1,26 @@
 # App objects
-- name:  UI Deployment
+- name:  NVUI Deployment
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
 # Istio objects
-- name:  UI DestinationRule
+- name:  NVUI DestinationRule
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/drule.yaml') }}"
 
-- name:  UI VirtualService
+- name:  NVUI VirtualService
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"
 
-- name:  UI DestinationRule for Istio NS
+- name:  NVUI DestinationRule for Istio NS
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
 
-- name:  UI Policy for UI
+- name:  NVUI Policy 
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/policy.yaml') }}"

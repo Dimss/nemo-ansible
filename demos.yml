@@ -1,0 +1,20 @@
+---
+- name: Prerequest
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  vars:
+    mtls_mode: ISTIO_MUTUAL
+  tasks:
+    - name: nvui
+      import_role:
+        name: nvui
+      tags: nvui
+    - name: delay
+      import_role:
+        name: likes-delay
+      tags: delay
+    - name: abort
+      import_role:
+        name: likes-abort
+      tags: abort

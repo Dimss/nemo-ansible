@@ -5,18 +5,18 @@
     definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"
 
 # App objects
-- name:  Comments Deployment
+- name:  Likes Deployment
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
 # Istio objects
-- name:  Comments DestinationRule
+- name:  Likes DestinationRule
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/drule.yaml') }}"
 
-- name:  Comments VirtualService
+- name:  Likes VirtualService
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"

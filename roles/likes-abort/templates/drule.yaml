@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: likes
+  namespace: "{{namespace}}"
+spec:
+  host: likes
+  trafficPolicy:
+    tls:
+      mode: "{{mtls_mode}}"
+  subsets:
+  - name: v1
+    labels:
+      version: v1

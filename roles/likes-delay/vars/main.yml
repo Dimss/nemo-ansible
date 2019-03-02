@@ -1,0 +1,2 @@
+state: present # present/absent
+likes_bc_name: likes

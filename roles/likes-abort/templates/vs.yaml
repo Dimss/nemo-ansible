@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: likes
+  namespace: "{{namespace}}"
+spec:
+  hosts:
+    - likes
+  http:
+  - fault:
+      abort:
+        httpStatus: 400
+        percent: 100
+    match:
+    - headers:
+        X-APP-TEST:
+          exact: test
+    route:
+    - destination:
+        host: likes
+        subset: v1
+  - route:
+    - destination:
+        host: likes
+        subset: v1
