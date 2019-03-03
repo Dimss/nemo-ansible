@@ -35,8 +35,8 @@ spec:
           local headers = handle:headers()
           handle:headers():add("foo-80","bar")
           handle:logWarn(" Hello World  logWarn ")
-          for key, value in pairs(headers) do
-            handle:logWarn(key)
-            handle:logWarn(value)
-          end
+          # for key, value in pairs(headers) do
+          #  handle:logWarn(key)
+          #  handle:logWarn(value)
+          # end
         end
