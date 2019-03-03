@@ -19,6 +19,16 @@ spec:
           local headers = handle:headers()
           local authToken = headers:get("x-nemo-auth")
           handle:logWarn(authToken)
+          local h, body, handle:httpCall(
+            "identity",
+            {
+              [":method"] = "GET",
+              [":path"] = "/v1/token/"..authToken,
+              [":authority"] = "identity"
+            },
+            ,
+            80)
+          handle:logWarn(#body)
           handle:logWarn(" ============================================= ")
         end
         function envoy_on_response(handle)
