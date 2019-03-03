@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: feed
+  namespace: istio-system
+spec:
+  host: "feed.{{namespace}}.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: "{{feed_mtls_mode}}"
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v1d
+    labels:
+      version: v1d

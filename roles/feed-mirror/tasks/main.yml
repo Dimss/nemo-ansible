@@ -1,0 +1,19 @@
+- name:  Feed Debug Deployment instance
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/dep-debug.yaml') }}"
+
+- name:  Feed Debug DestinationRule
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+
+- name:  Feed Debug VirtualService
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+
+- name:  Feed Debug Telepresence
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/tel.yaml') }}"

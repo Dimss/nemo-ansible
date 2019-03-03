@@ -22,3 +22,7 @@
       import_role:
         name: feed-cb
       tags: cb
+    - name: mirror
+      import_role:
+        name: feed-mirror
+      tags: mirror

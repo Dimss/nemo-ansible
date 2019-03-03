@@ -29,3 +29,11 @@ demo-cb-clean:
 	oc scale deployment feed --replicas=1
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags cb
 	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags feed
+
+demo-mirror:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags mirror
+
+demo-mirror-clean:
+	pgrep -f "telepresence -d tel" | xargs kill -9
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags mirror
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags feed
