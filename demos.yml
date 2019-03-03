@@ -8,7 +8,7 @@
   tasks:
     - name: nvui
       import_role:
-        name: nvui
+        name: ui-header-routing
       tags: nvui
     - name: delay
       import_role:
@@ -30,3 +30,15 @@
       import_role:
         name: identity-envoy-filters
       tags: filters
+    - name: identitynv-weight-native
+      import_role:
+        name: identitynv-weight-native
+      tags: weight-native
+    - name: weight-istio
+      import_role:
+        name: identitynv-weight-istio
+      tags: weight-istio
+    - name: nvui-weight-istio
+      import_role:
+        name: nvui-weight-istio
+      tags: nvui-weight-istio

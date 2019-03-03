@@ -65,6 +65,16 @@
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/identity-bc.yaml') }}"
 
+- name:  Identity NV ImageStream
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/identitynv-is.yaml') }}"
+
+- name: Identity NV BuildConfig
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/identitynv-bc.yaml') }}"
+
 - name: Likes ImageStream
   k8s:
     state: "{{state}}"
@@ -125,3 +135,4 @@
     oc start-build receiver
     oc start-build ui
     oc start-build ui-new-version
+    oc start-build identity-new-version

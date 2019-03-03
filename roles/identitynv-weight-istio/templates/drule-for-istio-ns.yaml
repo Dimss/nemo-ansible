@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: identity
+  namespace: istio-system
+spec:
+  host: "identity.{{namespace}}.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: "{{identitynv_mtls_mode}}"
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2

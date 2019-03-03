@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-new-version
+  namespace: "{{namespace}}"
+  labels:
+    app: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: ui
+        version: v2
+    spec:
+      containers:
+      - name: ui
+        image: "docker-registry.default.svc:5000/{{namespace}}/ui-new-version:0.1"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000

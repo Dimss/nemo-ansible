@@ -1,5 +1,30 @@
 NAMESPACE := nemo
 
+demo-weight-native:
+	# watch -n1 -d -c "oc exec $(oc get pods  | grep tkit | awk '{print $1}') -c tkit sh -- -c 'curl -s -H "Content-Type: application/json" http://identity/v1/system/info' | jq . -C "
+	oc delete destinationrule identity
+	oc delete destinationrule identity -n istio-system
+	oc delete VirtualService identity
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags weight-native
+
+demo-weight-native-clean:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags weight-native
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags identity
+
+demo-weight-identity-istio:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags weight-istio
+
+demo-weight-identity-istio-clean:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags weight-istio
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags identity
+
+demo-weight-nvui-istio:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags nvui-weight-istio
+
+demo-weight-nvui-istio-clean:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags nvui-weight-istio
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags ui
+
 demo-routing-header:
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags nvui
 

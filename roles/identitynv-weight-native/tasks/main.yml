@@ -1,0 +1,5 @@
+# App objects
+- name:  Identity NV Deployment - Native Routing
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/dep.yaml') }}"
