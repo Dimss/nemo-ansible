@@ -19,24 +19,11 @@ spec:
           local headers = handle:headers()
           local authToken = headers:get("x-nemo-auth")
           handle:logWarn(authToken)
-          local h, body, handle:httpCall(
-            "identity",
-            {
-              [":method"] = "GET",
-              [":path"] = "/v1/token/"..authToken,
-              [":authority"] = "identity"
-            },
-            ,
-            80)
-          handle:logWarn(#body)
           handle:logWarn(" ============================================= ")
         end
         function envoy_on_response(handle)
-          local headers = handle:headers()
-          handle:headers():add("foo-80","bar")
-          handle:logWarn(" Hello World  logWarn ")
-          # for key, value in pairs(headers) do
-          #  handle:logWarn(key)
-          #  handle:logWarn(value)
-          # end
+          handle:logWarn(" ============= envoy_on_response ============= ")
+          handle:headers():add("my-custom-header-response","my-header-value")
+          handle:logWarn("Custom header has been added to respose")
+          handle:logWarn(" ============================================= ")
         end
