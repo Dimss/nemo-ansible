@@ -1,0 +1,4 @@
+- name:  Identity Envoy Filter
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/envoy-filter.yaml') }}"

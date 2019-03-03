@@ -26,3 +26,7 @@
       import_role:
         name: feed-mirror
       tags: mirror
+    - name: filters
+      import_role:
+        name: identity-envoy-filters
+      tags: filters

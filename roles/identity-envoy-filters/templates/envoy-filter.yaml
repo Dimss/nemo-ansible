@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1alpha3 # https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/lua_filter#config-http-filters-lua-stream-handle-api
+kind: EnvoyFilter                        # https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/lua_filter#stream-handle-api
+metadata:
+  name: identity-checker-lua
+  namespace: "{{namespace}}"
+spec:
+  workloadLabels:
+    app: links
+  filters:
+  - listenerMatch:
+      portNumber: 80
+      listenerType: ANY
+    filterName: envoy.lua
+    filterType: HTTP
+    filterConfig:
+      inlineCode: |
+        function envoy_on_request(handle)
+          handle:logWarn(" ============= envoy_on_request ============= ")
+          local headers = handle:headers()
+          local authToken = headers:get("x-nemo-auth")
+          handle:logWarn(authToken)
+          handle:logWarn(" ============================================= ")
+        end
+        function envoy_on_response(handle)
+          local headers = handle:headers()
+          handle:headers():add("foo-80","bar")
+          handle:logWarn(" Hello World  logWarn ")
+          for key, value in pairs(headers) do
+            handle:logWarn(key)
+            handle:logWarn(value)
+          end
+        end

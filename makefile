@@ -37,3 +37,9 @@ demo-mirror-clean:
 	pgrep -f "telepresence -d tel" | xargs kill -9
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags mirror
 	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags feed
+
+demo-filters:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags filters
+
+demo-filters-clean:
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags filters
