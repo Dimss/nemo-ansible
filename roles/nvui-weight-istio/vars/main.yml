@@ -1,3 +1,2 @@
 state: present # present/absent
-identity_bc_name: identity
-identitynv_mtls_mode: DISABLE
+nvui_mtls_mode: DISABLE

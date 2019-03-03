@@ -1,15 +1,20 @@
 # App objects
-- name:  Identity NV Deployment
+- name: NVUI Deployment
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
-- name: Identity NV VirtualService
+- name: NVUI VirtualService
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/vs.yaml') }}"
 
-- name:  Identity DestinationRule for Istio NS
+- name:  NVUI DestinationRule
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+
+- name:  NVUI DestinationRule for Istio NS
   k8s:
     state: "{{state}}"
     definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
