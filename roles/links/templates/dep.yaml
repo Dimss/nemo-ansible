@@ -36,6 +36,7 @@ spec:
       containers:
       - name: links
         image: "docker-registry.default.svc:5000/{{namespace}}/links:0.1"
+        imagePullPolicy: Always
         env:
         - name: PROFILE
           value: PROD
