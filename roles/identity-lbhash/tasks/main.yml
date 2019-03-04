@@ -1,0 +1,4 @@
+- name:  Identity DestinationRule for Istio NS
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"

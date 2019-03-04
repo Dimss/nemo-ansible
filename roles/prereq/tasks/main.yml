@@ -136,3 +136,9 @@
     oc start-build ui
     oc start-build ui-new-version
     oc start-build identity-new-version
+  when: state  == 'present'
+
+- name:  Delete all services
+  shell: |
+    oc delete build --all
+  when: state  == 'absent'

@@ -9,7 +9,7 @@ spec:
   selector:
     app: ui
   ports:
-  - name: http
+  - name: http-ui
     port: 5000
     targetPort: 5000
 ---

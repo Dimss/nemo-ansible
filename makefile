@@ -32,6 +32,17 @@ demo-routing-header-clean:
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags nvui
 	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags ui
 
+demo-lbhash:
+	oc scale deployment identity --replicas=2
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags identity-lbhash
+	# uuidgen
+	# watch -n0.5 -d -c "curl -H 'x-app-test: user-app-123321' -s http://identity.nemo/v1/system/info | jq . -C "
+
+demo-lbhash-clean:
+	oc scale deployment identity --replicas=1
+	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE} state=absent" --tags identity-lbhash
+	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags identity
+
 demo-delay:
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags delay
 

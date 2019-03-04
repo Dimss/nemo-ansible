@@ -42,3 +42,7 @@
       import_role:
         name: nvui-weight-istio
       tags: nvui-weight-istio
+    - name: identity-lbhash
+      import_role:
+        name: identity-lbhash
+      tags: identity-lbhash
