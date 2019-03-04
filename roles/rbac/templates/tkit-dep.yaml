@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tkit
+  namespace: "{{namespace}}"
+  labels:
+    app: tkit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tkit
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: tkit
+        version: v1
+    spec:
+      containers:
+      - name: "tkit"
+        image: "docker.io/dimssss/tkit:0.1"
+        command: ["/bin/bash", "-c", "sleep 9999999"]

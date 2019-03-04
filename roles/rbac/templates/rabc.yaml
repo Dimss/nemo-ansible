@@ -1,0 +1,10 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: RbacConfig
+metadata:
+  name: default
+  namespace: "{{namespace}}"
+spec:
+  mode: 'ON_WITH_INCLUSION'
+  inclusion:
+    services:
+      - "links.{{namespace}}.svc.cluster.local"

@@ -46,3 +46,7 @@
       import_role:
         name: identity-lbhash
       tags: identity-lbhash
+    - name: rbac
+      import_role:
+        name: rbac
+      tags: rbac

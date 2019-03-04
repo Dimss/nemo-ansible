@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: feed-sa
+  namespace: "{{namespace}}"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: receiver-sa
+  namespace: "{{namespace}}"
+  

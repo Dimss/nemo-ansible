@@ -1,0 +1,29 @@
+- name:  Rbac setup
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/rabc.yaml') }}"
+
+- name:  ServiceAccount setup
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/sa.yaml') }}"
+
+- name: ServiceRole & ServiceRoleBinding
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/service-role-bind.yaml') }}"
+
+- name: Feed deployment
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/feed-dep.yaml') }}"
+
+- name: Receiver deployment
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/receiver-dep.yaml') }}"
+
+- name: TKIT deployment
+  k8s:
+    state: "{{state}}"
+    definition: "{{ lookup('template', 'templates/tkit-dep.yaml') }}"

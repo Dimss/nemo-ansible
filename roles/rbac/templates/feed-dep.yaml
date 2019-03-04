@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed
+  namespace: "{{namespace}}"
+  labels:
+    app: feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: feed
+        version: v1
+    spec:
+      serviceAccountName: feed-sa
+      containers:
+      - name: feed
+        image: "docker-registry.default.svc:5000/{{namespace}}/feed:0.1"
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: "JAVA_APP_JAR"
+          value: "feed-0.7-fat.jar"
+        ports:
+        - containerPort: 8080
