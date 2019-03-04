@@ -9,7 +9,7 @@
 ![schema](https://raw.githubusercontent.com/Dimss/nemo-ansible/master/architecture.png)
 
 ### Istio traffic shifting/routing
-- K8S native RR routing
+- [K8S native RR routing](../master/roles/identitynv-weight-native)
 ```
 make demo1-weight-native       # run to deploy
 make demo1-weight-native-clean # run to remove
