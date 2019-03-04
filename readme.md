@@ -14,7 +14,7 @@
 make demo1-weight-native                # run to deploy
 make demo1-weight-native-clean          # run to remove
 ```
-- [Istio weight routing for backends system (REST)](../master/roles/identitynv-weight-native)
+- [Istio weight routing for backends system (REST)](../master/roles/identitynv-weight-istio)
 ```
 make demo2-weight-identity-istio       # run to deploy
 make demo2-weight-identity-istio-clean # run to remove
