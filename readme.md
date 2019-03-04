@@ -1,5 +1,13 @@
 # Istio recipes
 
+### Setup demo environment
+- Install pipenv for Python3 (if your python version is not 3.6, update Pipefile with correct version for your environment)
+- `pipenv install`
+- `pipenv run ansible-playbook site.yml --extra-vars "namespace=REPLACE_WITH_NAMESPACE run_prereq=true"`
+
+Architecture
+
+
 ### Istio traffic shifting/routing
 - K8S native RR routing
 ```
