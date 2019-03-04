@@ -5,8 +5,8 @@
 - `pipenv install`
 - `pipenv run ansible-playbook site.yml --extra-vars "namespace=REPLACE_WITH_NAMESPACE run_prereq=true"`
 
-Architecture
-
+### Architecture
+![schema](https://raw.githubusercontent.com/Dimss/nemo-ansible/master/architecture.png)
 
 ### Istio traffic shifting/routing
 - K8S native RR routing
