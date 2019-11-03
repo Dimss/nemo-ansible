@@ -25,18 +25,18 @@
 #      import_role:
 #        name: links
 #      tags: links
-    - name: Comments service deployment
-      import_role:
-        name: comments
-      tags: comments
+#    - name: Comments service deployment
+#      import_role:
+#        name: comments
+#      tags: comments
 #    - name: Likes service deployment
 #      import_role:
 #        name: likes
 #      tags: likes
-#    - name: Feed service deployment
-#      import_role:
-#        name: feed
-#      tags: feed
+    - name: Feed service deployment
+      import_role:
+        name: feed
+      tags: feed
 #    - name: UI service deployment
 #      import_role:
 #        name: ui

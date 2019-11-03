@@ -13,8 +13,8 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: v1
 kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
   name: "{{app_name}}"
   namespace: "{{namespace}}"
@@ -22,21 +22,14 @@ metadata:
     app: "{{app_name}}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: "{{app_name}}"
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
         app: "{{app_name}}"
-        version: v1
     spec:
       containers:
       - name: "{{app_name}}"
         image: " "
-        imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prod
@@ -54,4 +47,3 @@ spec:
         from:
           kind: "ImageStreamTag"
           name: "{{app_istag}}"
-          namespace: "{{namespace}}"

@@ -1,6 +1,6 @@
-- name: Build Comment Service
+- name: Build {{app_name}} Service
   block:
-  - name: Create IS for comment service
+  - name: Create IS for {{app_name}} service
     k8s:
       state: "{{state}}"
       definition: "{{ lookup('template', 'templates/is.yaml') }}"
@@ -10,7 +10,7 @@
       definition: "{{ lookup('template', 'templates/bc.yaml') }}"
   - name:  Build comment service
     shell: |
-      oc start-build comments
+      oc start-build {{app_name}}
     when: state == "present"
   when:
   - prereq|bool == True

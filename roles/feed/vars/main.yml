@@ -3,4 +3,4 @@ feed_mtls_mode: DISABLE
 app_name: "feed"
 app_istag: "feed:latest"
 from_istag: "java:8"
-git: "https://github.com/Dimss/nemo-comments.git"
+git: "https://github.com/Dimss/nemo-feed.git"
