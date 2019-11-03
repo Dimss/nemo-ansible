@@ -1,22 +1,49 @@
-# App objects
-- name:  MongoDB instace
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"
+- name: Build {{app_name}} Service
+  block:
+    - name: Create IS for {{app_name}} service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/is.yaml') }}"
+    - name:  Create build config for comment service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/bc.yaml') }}"
+    - name:  Build comment service
+      shell: |
+        oc start-build {{app_name}}
+      when: state == "present"
+  when:
+  - prereq|bool == True
 
-# App objects
-- name:  Links Deployment
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/dep.yaml') }}"
+- name: Deploy Comments Service
+  block:
+    # App objects
+    - name:  MongoDB instace
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"
 
-# Istio objects
-- name:  Links DestinationRule
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+    # App objects
+    - name:  Links Deployment
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
-- name:  Links VirtualService
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+    # Istio objects
+    - name:  Links DestinationRule
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+
+    - name:  Links VirtualService
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+
+  when: prereq|bool == False
+
+
+
+
+
+

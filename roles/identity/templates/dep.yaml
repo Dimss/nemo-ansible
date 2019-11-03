@@ -13,32 +13,35 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
-  name: identity
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   labels:
-    app: identity
+    app: "{{app_name}}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: identity
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
-        app: identity
-        version: v1
+        app: "{{app_name}}"
     spec:
       containers:
-      - name: identity
-        image: "docker-registry.default.svc:5000/{{namespace}}/identity:0.1"
-        imagePullPolicy: Always
+      - name: "{{app_name}}"
+        image: " "
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prod
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"

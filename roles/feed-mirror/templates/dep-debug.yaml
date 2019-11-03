@@ -13,29 +13,27 @@ spec:
   - name: xdebug
     port: 5005
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
   name: feed-debug
   namespace: "{{namespace}}"
+  labels:
+    app: "{{app_name}}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: feed
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: "true"
       labels:
-        app: feed
+        app: "{{app_name}}"
         version: v1d
         debug: feed-debug
     spec:
       containers:
-      - name: feed
-        image: docker-registry.default.svc:5000/nemo/feed:0.1
-        imagePullPolicy: Always
+      - name: "{{app_name}}"
+        image: " "
         command: ["/bin/bash","-c", "java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=5005,suspend=y -jar /deployments/feed-0.7-fat.jar"]
         env:
         - name: SPRING_PROFILES_ACTIVE
@@ -45,3 +43,13 @@ spec:
         ports:
         - containerPort: 8080
         - containerPort: 5005
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"

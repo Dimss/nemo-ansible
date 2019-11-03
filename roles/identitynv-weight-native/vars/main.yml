@@ -1,3 +1,7 @@
 state: present # present/absent
-identity_bc_name: identity
 identitynv_mtls_mode: DISABLE
+app_name: "identity-new-version"
+app_istag: "identity-new-version:latest"
+from_istag: "java:8"
+git: "https://github.com/Dimss/nemo-identity-service.git"
+pg_is: "postgresql:10"

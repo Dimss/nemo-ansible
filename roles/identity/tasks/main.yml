@@ -1,32 +1,53 @@
-# Add Postgres objects
-- name:  Identity Postgres
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/pg.yaml') }}"
+- name: Build {{app_name}} Service
+  block:
+    - name: Create IS for {{app_name}} service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/is.yaml') }}"
+    - name:  Create build config for comment service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/bc.yaml') }}"
+    - name:  Build comment service
+      shell: |
+        oc start-build {{app_name}}
+      when: state == "present"
+  when:
+  - prereq|bool == True
 
-# App objects
-- name:  Identity Deployment
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/dep.yaml') }}"
+- name: Deploy Comments Service
+  block:
+    # Add Postgres objects
+    - name:  Identity Postgres
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/pg.yaml') }}"
 
-# Istio objects
-- name:  DestinationRule
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+    # App objects
+    - name:  Identity Deployment
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
-- name:  VirtualService
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+    # Istio objects
+    - name:  DestinationRule
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/drule.yaml') }}"
 
-- name:  Identity DestinationRule for Istio NS
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+    - name:  VirtualService
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/vs.yaml') }}"
 
-- name:  Identity Policy
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/policy.yaml') }}"
+    - name:  Identity DestinationRule for Istio NS
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+
+    - name:  Identity Policy
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/policy.yaml') }}"
+  when: prereq|bool == False
+

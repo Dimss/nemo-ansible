@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: feed
+  name: "{{app_name}}"
   namespace: istio-system
 spec:
   host: "feed.{{namespace}}.svc.cluster.local"

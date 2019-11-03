@@ -1,3 +1,6 @@
 state: present # present/absent
-ui_bc_name: ui
 ui_mtls_mode: DISABLE
+app_name: "ui"
+app_istag: "ui:latest"
+from_istag: "nodejs:8"
+git: "https://github.com/Dimss/nemo-ui.git"

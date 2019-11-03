@@ -1,2 +1,6 @@
 state: present # present/absent
-likes_bc_name: likes
+app_name: "likes"
+app_istag: "likes:latest"
+from_istag: "nodejs:8"
+git: "https://github.com/Dimss/likes.git"
+mongodb_is: "mongodb:3.6"

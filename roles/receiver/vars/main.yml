@@ -1,3 +1,6 @@
 state: present # present/absent
-receiver_bc_name: receiver
 receiver_mtls_mode: DISABLE
+app_name: "receiver"
+app_istag: "receiver:latest"
+from_istag: "java:8"
+git: "https://github.com/Dimss/nemo-receiver.git"

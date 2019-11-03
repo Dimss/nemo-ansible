@@ -13,32 +13,35 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
-  name: links
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   labels:
-    app: links
+    app: "{{app_name}}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: links
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
-        app: links
-        version: v1
+        app: "{{app_name}}"
     spec:
       containers:
-      - name: links
-        image: "docker-registry.default.svc:5000/{{namespace}}/links:0.1"
-        imagePullPolicy: Always
+      - name: "{{app_name}}"
+        image: " "
         env:
         - name: PROFILE
           value: PROD
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"

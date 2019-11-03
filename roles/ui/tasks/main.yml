@@ -1,26 +1,54 @@
-# App objects
-- name:  UI Deployment
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/dep.yaml') }}"
+- name: Build {{app_name}} Service
+  block:
+    - name: Create IS for {{app_name}} service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/is.yaml') }}"
+    - name:  Create build config for comment service
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/bc.yaml') }}"
+    - name:  Build comment service
+      shell: |
+        oc start-build {{app_name}}
+      when: state == "present"
+  when:
+  - prereq|bool == True
 
-# Istio objects
-- name:  UI DestinationRule
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+- name: Deploy Comments Service
+  block:
+    # App objects
+    - name:  UI Deployment
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/dep.yaml') }}"
 
-- name:  UI VirtualService
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+    # Istio objects
+    - name:  UI DestinationRule
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/drule.yaml') }}"
 
-- name:  UI DestinationRule for Istio NS
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+    - name:  UI VirtualService
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/vs.yaml') }}"
 
-- name:  UI Policy for UI
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/policy.yaml') }}"
+    - name:  UI DestinationRule for Istio NS
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/drule-for-istio-ns.yaml') }}"
+
+    - name:  UI Policy for UI
+      k8s:
+        state: "{{state}}"
+        definition: "{{ lookup('template', 'templates/policy.yaml') }}"
+
+  when: prereq|bool == False
+
+
+
+
+
+
+

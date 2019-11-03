@@ -13,10 +13,10 @@
 #        name: prereq
 #      tags: "prereq"
 #      when: run_prereq
-#    - name: Identity service deployment
-#      import_role:
-#        name: identity
-#      tags: identity
+    - name: Identity service deployment
+      import_role:
+        name: identity
+      tags: identity
 #    - name: Receiver service deployment
 #      import_role:
 #        name: receiver
@@ -33,10 +33,10 @@
 #      import_role:
 #        name: likes
 #      tags: likes
-    - name: Feed service deployment
-      import_role:
-        name: feed
-      tags: feed
+#    - name: Feed service deployment
+#      import_role:
+#        name: feed
+#      tags: feed
 #    - name: UI service deployment
 #      import_role:
 #        name: ui

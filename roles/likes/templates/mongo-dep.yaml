@@ -38,27 +38,36 @@ spec:
   - name: mongo
     port: 27017
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
-  name: mongo-likes
+  name: "mongo-likes"
   namespace: "{{namespace}}"
   labels:
-    app: mongo-likes
+    app: "mongo-likes"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: mongo-likes
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
-        app: mongo-likes
+        app: "mongo-likes"
     spec:
       containers:
-      - name: mongo-likes
-        image: "docker-registry.default.svc:5000/{{namespace}}/mongo:latest"
+      - name: "mongo-likes"
+        image: " "
+        env:
+        - name: MONGODB_ADMIN_PASSWORD
+          value: "12345"
         ports:
         - containerPort: 27017
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "mongo-likes"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{mongodb_is}}"
+          namespace: "openshift"

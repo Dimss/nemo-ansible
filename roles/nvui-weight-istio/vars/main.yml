@@ -1,2 +1,6 @@
 state: present # present/absent
 nvui_mtls_mode: DISABLE
+app_name: "ui-new-version"
+app_istag: "ui-new-version:latest"
+from_istag: "nodejs:8"
+git: "https://github.com/Dimss/nemo-ui.git"
