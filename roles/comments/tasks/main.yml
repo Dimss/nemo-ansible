@@ -1,5 +1,9 @@
 - name: Build Comment Service
   block:
+  - name: Create IS for comment service
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/is.yaml') }}"
   - name:  Create build config for comment service
     k8s:
       state: "{{state}}"
