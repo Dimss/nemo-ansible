@@ -1,0 +1,29 @@
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  name: "{{app_name}}"
+  namespace: "{{namespace}}"
+  labels:
+    app: "{{app_name}}"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "{{app_name}}"
+    spec:
+      containers:
+      - name: "{{app_name}}"
+        image: " "
+        ports:
+        - containerPort: 5000
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"

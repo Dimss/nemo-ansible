@@ -17,35 +17,35 @@
       import_role:
         name: identity
       tags: identity
-#    - name: Receiver service deployment
-#      import_role:
-#        name: receiver
-#      tags: receiver
-#    - name: Links service deployment
-#      import_role:
-#        name: links
-#      tags: links
-#    - name: Comments service deployment
-#      import_role:
-#        name: comments
-#      tags: comments
-#    - name: Likes service deployment
-#      import_role:
-#        name: likes
-#      tags: likes
-#    - name: Feed service deployment
-#      import_role:
-#        name: feed
-#      tags: feed
-#    - name: UI service deployment
-#      import_role:
-#        name: ui
-#      tags: ui
-#    - name: Test Kit service deployment
-#      import_role:
-#        name: tkit
-#      tags: tkit
-#    - name: Routes and Gateway
-#      import_role:
-#        name: gwroutes
-#      tags: gwroutes
+    - name: Receiver service deployment
+      import_role:
+        name: receiver
+      tags: receiver
+    - name: Links service deployment
+      import_role:
+        name: links
+      tags: links
+    - name: Comments service deployment
+      import_role:
+        name: comments
+      tags: comments
+    - name: Likes service deployment
+      import_role:
+        name: likes
+      tags: likes
+    - name: Feed service deployment
+      import_role:
+        name: feed
+      tags: feed
+    - name: UI service deployment
+      import_role:
+        name: ui
+      tags: ui
+    - name: Test Kit service deployment
+      import_role:
+        name: tkit
+      tags: tkit
+    - name: Routes and Gateway
+      import_role:
+        name: gwroutes
+      tags: gwroutes
