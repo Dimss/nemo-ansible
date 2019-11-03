@@ -4,47 +4,48 @@
   connection: local
   gather_facts: no
   vars:
-    mtls_mode: ISTIO_MUTUAL  # ISTIO_MUTUAL/MUTUAL/SIMPLE/DISABLE https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSSettings-TLSmode
-    run_prereq: false
+    mtls_mode: DISABLE  # ISTIO_MUTUAL/MUTUAL/SIMPLE/DISABLE https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSSettings-TLSmode
+    prereq: false
+    namespace: nemo
   tasks:
-    - name: Run prerequisite role
-      import_role:
-        name: prereq
-      tags: "prereq"
-      when: run_prereq
-    - name: Identity service deployment
-      import_role:
-        name: identity
-      tags: identity
-    - name: Receiver service deployment
-      import_role:
-        name: receiver
-      tags: receiver
-    - name: Links service deployment
-      import_role:
-        name: links
-      tags: links
+#    - name: Run prerequisite role
+#      import_role:
+#        name: prereq
+#      tags: "prereq"
+#      when: run_prereq
+#    - name: Identity service deployment
+#      import_role:
+#        name: identity
+#      tags: identity
+#    - name: Receiver service deployment
+#      import_role:
+#        name: receiver
+#      tags: receiver
+#    - name: Links service deployment
+#      import_role:
+#        name: links
+#      tags: links
     - name: Comments service deployment
       import_role:
         name: comments
       tags: comments
-    - name: Likes service deployment
-      import_role:
-        name: likes
-      tags: likes
-    - name: Feed service deployment
-      import_role:
-        name: feed
-      tags: feed
-    - name: UI service deployment
-      import_role:
-        name: ui
-      tags: ui
-    - name: Test Kit service deployment
-      import_role:
-        name: tkit
-      tags: tkit
-    - name: Routes and Gateway
-      import_role:
-        name: gwroutes
-      tags: gwroutes
+#    - name: Likes service deployment
+#      import_role:
+#        name: likes
+#      tags: likes
+#    - name: Feed service deployment
+#      import_role:
+#        name: feed
+#      tags: feed
+#    - name: UI service deployment
+#      import_role:
+#        name: ui
+#      tags: ui
+#    - name: Test Kit service deployment
+#      import_role:
+#        name: tkit
+#      tags: tkit
+#    - name: Routes and Gateway
+#      import_role:
+#        name: gwroutes
+#      tags: gwroutes

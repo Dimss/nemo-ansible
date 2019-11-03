@@ -1,22 +1,32 @@
-# App objects
-- name:  MongoDB instace
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"
+- name: Build Comment Service
+  block:
+  - name:  Create build config for comment service
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/bc.yaml') }}"
+  - name:  Build comment service
+    shell: |
+      oc start-build comments
+    when: state == "present"
+  when:
+  - prereq|bool == True
 
-# App objects
-- name:  Comments Deployment
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/dep.yaml') }}"
-
-# Istio objects
-- name:  Comments DestinationRule
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/drule.yaml') }}"
-
-- name:  Comments VirtualService
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+- name: Deploy Comments Service
+  block:
+  - name:  MongoDB instace
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/mongo-dep.yaml') }}"
+  - name:  Comments Deployment
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/dep.yaml') }}"
+  - name:  Comments DestinationRule
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/drule.yaml') }}"
+  - name:  Comments VirtualService
+    k8s:
+      state: "{{state}}"
+      definition: "{{ lookup('template', 'templates/vs.yaml') }}"
+  when: prereq|bool == False

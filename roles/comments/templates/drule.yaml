@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: comments
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
 spec:
-  host: comments
+  host: "{{app_name}}"
   trafficPolicy:
     tls:
       mode: "{{mtls_mode}}"

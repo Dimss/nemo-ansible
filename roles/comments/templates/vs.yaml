@@ -1,12 +1,11 @@
-
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: comments
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
 spec:
   hosts:
-    - comments
+    - "{{app_name}}"
   http:
   - route:
     - destination:

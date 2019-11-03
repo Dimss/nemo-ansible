@@ -12,8 +12,9 @@ openshift = "*"
 pyyaml = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
 
 [scripts]
+init = 'ansible-playbook site.yml --tags prereq --extra-vars "namespace=nemo run_prereq=true"'
 create = 'ansible-playbook site.yml --extra-vars "namespace=nemo"'
-delete = "ansible-playbook site.yml --extra-vars 'namespace=nemo state=absent"
+delete = "ansible-playbook site.yml --extra-vars 'namespace=nemo state=absent'"

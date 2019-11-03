@@ -1,41 +1,41 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: feed
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   lables:
-    app: feed
+    app: "{{app_name}}"
 spec:
   selector:
-    app: feed
+    app: "{{app_name}}"
   ports:
   - name: http
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
-  name: feed
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   labels:
-    app: feed
+    app: "{{app_name}}"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: feed
+      app: "{{app_name}}"
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: "true"
       labels:
-        app: feed
+        app: "{{app_name}}"
         version: v1
     spec:
       containers:
-      - name: feed
-        image: "docker-registry.default.svc:5000/{{namespace}}/feed:0.1"
+      - name: "{{app_name}}"
+        image: " "
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
@@ -44,3 +44,14 @@ spec:
           value: "feed-0.7-fat.jar"
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"
+          namespace: "{{namespace}}"

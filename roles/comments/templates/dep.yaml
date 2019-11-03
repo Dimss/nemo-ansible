@@ -1,43 +1,49 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: comments
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   lables:
-    app: comments
+    app: "{{app_name}}"
 spec:
   selector:
-    app: comments
+    app: "{{app_name}}"
   ports:
   - name: http
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
-  name: comments
+  name: "{{app_name}}"
   namespace: "{{namespace}}"
   labels:
-    app: comments
+    app: "{{app_name}}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: comments
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
-        app: comments
-        version: v1
+        app: "{{app_name}}"
     spec:
       containers:
-      - name: comments
-        image: "docker-registry.default.svc:5000/{{namespace}}/comments:0.1"
+      - name: "{{app_name}}"
+        image: " "
         env:
         - name: MONGO_HOST
-          value: mongo-comments
+          value: "mongo-comments"
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "{{app_name}}"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{app_istag}}"
+
+

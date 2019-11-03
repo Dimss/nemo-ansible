@@ -38,27 +38,37 @@ spec:
   - name: mongo
     port: 27017
 ---
-apiVersion: apps/v1
-kind: Deployment
+kind: DeploymentConfig
+apiVersion: "v1"
 metadata:
-  name: mongo-comments
+  name: "mongo-comments"
   namespace: "{{namespace}}"
   labels:
-    app: mongo-comments
+    app: "mongo-comments"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: mongo-comments
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
-        app: mongo-comments
+        app: "mongo-comments"
     spec:
       containers:
-      - name: mongo-comments
-        image: "docker-registry.default.svc:5000/{{namespace}}/mongo:latest"
+      - name: "mongo-comments"
+        image: " "
+        env:
+        - name: MONGODB_ADMIN_PASSWORD
+          value: "12345"
         ports:
         - containerPort: 27017
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "mongo-comments"
+        from:
+          kind: "ImageStreamTag"
+          name: "{{mongodb_is}}"
+          namespace: "openshift"
+

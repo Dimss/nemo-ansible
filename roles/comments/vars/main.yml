@@ -1,2 +1,6 @@
 state: present # present/absent
-comments_bc_name: comments
+app_name: "comments"
+app_istag: "comments:latest"
+from_istag: "python:3.6"
+git: "https://github.com/Dimss/nemo-comments.git"
+mongodb_is: "mongodb:3.6"

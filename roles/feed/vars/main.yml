@@ -1,3 +1,7 @@
 state: present # present/absent
 feed_bc_name: feed
 feed_mtls_mode: DISABLE
+app_name: "feed"
+app_istag: "feed:latest"
+from_istag: "python:3.6"
+git: "https://github.com/Dimss/nemo-comments.git"

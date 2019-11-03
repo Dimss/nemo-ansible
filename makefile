@@ -12,6 +12,7 @@ demo1-weight-native-clean:
 	pipenv run ansible-playbook site.yml --extra-vars "namespace=${NAMESPACE}" --tags identity
 
 demo2-weight-identity-istio:
+	# watch -n1 -d -c "curl -s http://identity.nemo/v1/system/info | jq -C ."
 	pipenv run ansible-playbook demos.yml --extra-vars "namespace=${NAMESPACE}" --tags weight-istio
 
 demo2-weight-identity-istio-clean:
