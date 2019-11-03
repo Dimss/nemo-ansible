@@ -6,7 +6,7 @@ metadata:
   namespace: "{{namespace}}"
 spec:
   hosts:
-    - receiver.nemo
+    - receiver.apps.a.okto.ocplab.io
     - receiver
   gateways:
   - nemo-gateway

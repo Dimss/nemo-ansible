@@ -13,8 +13,8 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: identity
   namespace: "{{namespace}}"
@@ -22,9 +22,6 @@ metadata:
     app: identity
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: identity
   template:
     metadata:
       annotations:
@@ -42,3 +39,13 @@ spec:
           value: prod
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "identity"
+        from:
+          kind: "ImageStreamTag"
+          name: "identity:0.1"

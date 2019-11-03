@@ -5,7 +5,7 @@ metadata:
   namespace: "{{namespace}}"
 spec:
   hosts:
-  - frontend.nemo
+  - frontend.apps.a.okto.ocplab.io
   - ui
   gateways:
   - nemo-gateway

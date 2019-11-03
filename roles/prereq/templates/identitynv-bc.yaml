@@ -13,7 +13,8 @@ spec:
     sourceStrategy:
       from:
         kind: "ImageStreamTag"
-        name: "openjdk18-openshift:latest"
+        name: "java:8"
+        namespace: "openshift"
   output:
     to:
       kind: "ImageStreamTag"

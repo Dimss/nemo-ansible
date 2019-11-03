@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: ui-new-version
   namespace: "{{namespace}}"
@@ -20,7 +20,17 @@ spec:
     spec:
       containers:
       - name: ui
-        image: "docker-registry.default.svc:5000/{{namespace}}/ui-new-version:0.1"
+        image: " "
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "mongo-comments"
+        from:
+          kind: "ImageStreamTag"
+          name: "ui-new-version:0.1"

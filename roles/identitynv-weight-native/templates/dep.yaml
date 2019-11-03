@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: identity-new-version
   namespace: "{{namespace}}"
@@ -7,9 +7,6 @@ metadata:
     app: identity
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: identity
   template:
     metadata:
       annotations:
@@ -20,9 +17,19 @@ spec:
     spec:
       containers:
       - name: identity
-        image: "docker-registry.default.svc:5000/{{namespace}}/identity-new-version:0.1"
+        image: " "
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prod
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "identity"
+        from:
+          kind: "ImageStreamTag"
+          name: "identity-new-version:0.1"

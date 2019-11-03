@@ -5,7 +5,7 @@ metadata:
   namespace: "{{namespace}}"
 spec:
   hosts:
-    - identity.nemo
+    - identity.apps.a.okto.ocplab.io
     - identity
   gateways:
   - nemo-gateway

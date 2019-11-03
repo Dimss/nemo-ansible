@@ -12,7 +12,8 @@ spec:
     sourceStrategy:
       from:
         kind: "ImageStreamTag"
-        name: "python-36-rhel7:latest"
+        name: "python:3.6"
+        namespace: "openshift"
   output:
     to:
       kind: "ImageStreamTag"

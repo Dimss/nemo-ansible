@@ -38,8 +38,8 @@ spec:
   - name: pg
     port: 5432
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: pg
   namespace: "{{namespace}}"
@@ -47,9 +47,6 @@ metadata:
     app: pg
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: pg
   template:
     metadata:
       annotations:
@@ -59,6 +56,21 @@ spec:
     spec:
       containers:
       - name: pg
-        image: "docker-registry.default.svc:5000/{{namespace}}/postgres:latest"
+        image: " "
+        env:
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          value: "12345"
         ports:
         - containerPort: 5432
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "pg"
+        from:
+          kind: "ImageStreamTag"
+          name: "postgresql:10"
+          namespace: "openshift"
+

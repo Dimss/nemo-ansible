@@ -10,11 +10,11 @@ spec:
     app: ui
   ports:
   - name: http-ui
-    port: 5000
-    targetPort: 5000
+    port: 3000
+    targetPort: 3000
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: ui
   namespace: "{{namespace}}"
@@ -22,9 +22,6 @@ metadata:
     app: ui
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: ui
   template:
     metadata:
       annotations:
@@ -35,7 +32,17 @@ spec:
     spec:
       containers:
       - name: ui
-        image: "docker-registry.default.svc:5000/{{namespace}}/ui:0.1"
+        image: " "
         imagePullPolicy: Always
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "ui"
+        from:
+          kind: "ImageStreamTag"
+          name: "ui:0.1"

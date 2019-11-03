@@ -5,32 +5,32 @@
     oc adm policy add-scc-to-user anyuid -z default -n {{namespace}}
     oc adm policy add-scc-to-user privileged -z default -n {{namespace}}
   ignore_errors: yes
-
-# ImageStreams for building application containres
-- name:  OpenJDK18 ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/0-openjdk18-is.yaml') }}"
-
-- name:  Python36 ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/1-python36-is.yaml') }}"
-
-- name:  Python36 ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/2-nodejs-8-rhel7-is.yaml') }}"
-
-- name:  Postgres ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/4-pg-is.yaml') }}"
-
-- name:  MongoDB ImageStream
-  k8s:
-    state: "{{state}}"
-    definition: "{{ lookup('template', 'templates/5-mongo-is.yaml') }}"
+#
+## ImageStreams for building application containres
+#- name:  OpenJDK18 ImageStream
+#  k8s:
+#    state: "{{state}}"
+#    definition: "{{ lookup('template', 'templates/0-openjdk18-is.yaml') }}"
+#
+#- name:  Python36 ImageStream
+#  k8s:
+#    state: "{{state}}"
+#    definition: "{{ lookup('template', 'templates/1-python36-is.yaml') }}"
+#
+#- name:  Python36 ImageStream
+#  k8s:
+#    state: "{{state}}"
+#    definition: "{{ lookup('template', 'templates/2-nodejs-8-rhel7-is.yaml') }}"
+#
+#- name:  Postgres ImageStream
+#  k8s:
+#    state: "{{state}}"
+#    definition: "{{ lookup('template', 'templates/4-pg-is.yaml') }}"
+#
+#- name:  MongoDB ImageStream
+#  k8s:
+#    state: "{{state}}"
+#    definition: "{{ lookup('template', 'templates/5-mongo-is.yaml') }}"
 
 
 # Images ImageStreams and BuildConfigs

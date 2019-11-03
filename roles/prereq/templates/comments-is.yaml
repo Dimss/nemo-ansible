@@ -3,11 +3,3 @@ kind: ImageStream
 metadata:
   name: comments
   namespace: "{{namespace}}"
-spec:
-    tags:
-    - from:
-          kind: DockerImage
-          name: "docker-registry.default.svc:5000/{{namespace}}/comments"
-      name: latest
-      importPolicy:
-          scheduled: true

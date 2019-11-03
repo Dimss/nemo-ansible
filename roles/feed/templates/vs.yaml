@@ -5,7 +5,7 @@ metadata:
   namespace: "{{namespace}}"
 spec:
   hosts:
-    - feed.nemo
+    - feed.apps.a.okto.ocplab.io
     - feed
   gateways:
   - nemo-gateway

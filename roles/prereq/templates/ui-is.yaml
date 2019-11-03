@@ -3,11 +3,3 @@ kind: ImageStream
 metadata:
     name: ui
     namespace: "{{namespace}}"
-spec:
-    tags:
-    - from:
-          kind: DockerImage
-          name: "docker-registry.default.svc:5000/{{namespace}}/ui"
-      name: latest
-      importPolicy:
-          scheduled: true

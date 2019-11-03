@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: receiver
   namespace: "{{namespace}}"
@@ -7,9 +7,6 @@ metadata:
     app: receiver
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: receiver
   template:
     metadata:
       annotations:
@@ -21,9 +18,19 @@ spec:
       serviceAccountName: receiver-sa
       containers:
       - name: receiver
-        image: "docker-registry.default.svc:5000/{{namespace}}/receiver:0.1"
+        image: " "
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: prod
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "comments"
+        from:
+          kind: "ImageStreamTag"
+          name: "receiver:0.1"

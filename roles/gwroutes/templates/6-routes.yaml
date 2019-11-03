@@ -3,13 +3,11 @@ kind: Route
 metadata:
   labels:
     app: istio-ingressgateway
-    chart: gateways-1.0.4
-    heritage: Tiller
     istio: ingressgateway
   name: istio-ingressgateway-frontend
   namespace: istio-system
 spec:
-  host: frontend.nemo
+  host: frontend.apps.a.okto.ocplab.io
   port:
     targetPort: http2
   to:
@@ -23,13 +21,11 @@ kind: Route
 metadata:
   labels:
     app: istio-ingressgateway
-    chart: gateways-1.0.4
-    heritage: Tiller
     istio: ingressgateway
   name: istio-ingressgateway-identity
   namespace: istio-system
 spec:
-  host: identity.nemo
+  host: identity.apps.a.okto.ocplab.io
   port:
     targetPort: http2
   to:
@@ -43,13 +39,11 @@ kind: Route
 metadata:
   labels:
     app: istio-ingressgateway
-    chart: gateways-1.0.4
-    heritage: Tiller
     istio: ingressgateway
   name: istio-ingressgateway-receiver
   namespace: istio-system
 spec:
-  host: receiver.nemo
+  host: receiver.apps.a.okto.ocplab.io
   port:
     targetPort: http2
   to:
@@ -63,13 +57,11 @@ kind: Route
 metadata:
   labels:
     app: istio-ingressgateway
-    chart: gateways-1.0.4
-    heritage: Tiller
     istio: ingressgateway
   name: istio-ingressgateway-feed
   namespace: istio-system
 spec:
-  host: feed.nemo
+  host: feed.apps.a.okto.ocplab.io
   port:
     targetPort: http2
   to:

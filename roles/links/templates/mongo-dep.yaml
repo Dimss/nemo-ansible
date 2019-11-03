@@ -38,8 +38,8 @@ spec:
   - name: mongo
     port: 27017
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: mongo-links
   namespace: "{{namespace}}"
@@ -47,9 +47,6 @@ metadata:
     app: mongo-links
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: mongo-links
   template:
     metadata:
       annotations:
@@ -59,6 +56,20 @@ spec:
     spec:
       containers:
       - name: mongo-links
-        image: "docker-registry.default.svc:5000/{{namespace}}/mongo:latest"
+        image: " "
+        env:
+        - name: MONGODB_ADMIN_PASSWORD
+          value: "12345"
         ports:
         - containerPort: 27017
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "mongo-links"
+        from:
+          kind: "ImageStreamTag"
+          name: "mongodb:3.6"
+          namespace: "openshift"

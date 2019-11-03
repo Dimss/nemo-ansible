@@ -13,8 +13,8 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: links
   namespace: "{{namespace}}"
@@ -22,9 +22,6 @@ metadata:
     app: links
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: links
   template:
     metadata:
       annotations:
@@ -35,10 +32,20 @@ spec:
     spec:
       containers:
       - name: links
-        image: "docker-registry.default.svc:5000/{{namespace}}/links:0.1"
+        image: " "
         imagePullPolicy: Always
         env:
         - name: PROFILE
           value: PROD
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "links"
+        from:
+          kind: "ImageStreamTag"
+          name: "links:0.1"

@@ -13,8 +13,8 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: likes
   namespace: "{{namespace}}"
@@ -22,9 +22,6 @@ metadata:
     app: likes
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: likes
   template:
     metadata:
       annotations:
@@ -35,9 +32,19 @@ spec:
     spec:
       containers:
       - name: likes
-        image: "docker-registry.default.svc:5000/{{namespace}}/likes:0.1"
+        image: " "
         env:
         - name: PROFILE
           value: PROD
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "likes"
+        from:
+          kind: "ImageStreamTag"
+          name: "likes:0.1"

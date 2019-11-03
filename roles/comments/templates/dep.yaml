@@ -13,8 +13,8 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: DeploymentConfig
 metadata:
   name: comments
   namespace: "{{namespace}}"
@@ -22,9 +22,6 @@ metadata:
     app: comments
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: comments
   template:
     metadata:
       annotations:
@@ -35,9 +32,19 @@ spec:
     spec:
       containers:
       - name: comments
-        image: "docker-registry.default.svc:5000/{{namespace}}/comments:0.1"
+        image: " "
         env:
         - name: MONGO_HOST
           value: mongo-comments
         ports:
         - containerPort: 8080
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "comments"
+        from:
+          kind: "ImageStreamTag"
+          name: "comments:0.1"
